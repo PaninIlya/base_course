@@ -56,7 +56,8 @@ class Player:
             self.kol = int(input("Какое количетство?: "))
             if Castle(self.color).money >= Warrior(self.choice,1).price * self.kol:
                 print("Успешно!")
-                Castle(self.color).army.append(Warrior(self.choice,i+1))
+                war = Warrior(self.choice,i+1)
+                Castle(self.color).army.append(war)
                 Castle(self.color).money -= Warrior(self.choice,1).price * self.kol
                 print(f'Осталось денег:{Castle(self.color).money}')
                 print(f'Осталось денег:{Castle(self.color).money - Warrior(self.choice,1).price}')
