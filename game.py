@@ -29,21 +29,24 @@ goblin = NPC(50, 50)
 
 
 class Hero:
-    def __init__(self):
+    def __init__(self, index):
+        self.index = index
         self.hp = 500
         self.dmg = 400
         self.army = []
     
-
-
-
+red_hero = Hero(1)
+yellow_hero = Hero(2)
+green_hero = Hero(3)
+blue_hero = Hero(4)
 
 class Castle:
-    def __init__ (self,index):
+    def __init__ (self, index):
         self.index = index
         self.hp = 100000
-        self.money = 1000
+        self.money = 10000000
         self.army = []
+        self.upg_price = 50000
         
     def buy_army(self):
         while True:
@@ -51,7 +54,7 @@ class Castle:
             self.choice = int(input(f"Кого вы хотите купить?:{warriors_list}:\n"))
             if self.choice == 0:
                 break
-            self.kol = int(input('Скоко?:'))
+            self.kol = int(input('Сколько ?:'))
             if self.kol == 0:
                 break
             if self.money >= Warrior(warriors_list[self.choice], 1).price * self.kol:
@@ -59,9 +62,20 @@ class Castle:
                     self.army.append(Warrior(warriors_list[self.choice], i+1))
                     self.money -= Warrior(warriors_list[self.choice], 1).price
                 print(f'Осталось денег:{self.money}')
+                
             else:
                 print('Недостаточно денег!')
                 break
+    def upg(self):
+        if self.money > self.upg_price:
+            self.hp += 50000
+            self.money -= self.upg_price
+            print(f'У вас осталось денег : {self.money}')
+        else:
+            print('У вас недостаточно денег')
+
+     
+
 red_castle = Castle(1)
 yellow_castle = Castle(2)
 green_castle = Castle(3)
@@ -69,12 +83,12 @@ blue_castle = Castle(4)
 
 
 
-
-
-
 class Player:    
-    def __init__ (self,color):
+    def __init__ (self,color, castle):
         self.color = color
+        self.castle = castle
+
+
     def buy_army(self):
         if self.color == 1:
             red_castle.buy_army()
@@ -84,8 +98,20 @@ class Player:
             green_castle.buy_army()
         elif self.color == 4:
             blue_castle.buy_army()
-red_player = Player(1)
-yellow_player = Player(2)
-green_player = Player(3)
-blue_player = Player(4)
+
+    def castle_upg(self):
+        wish = input('Хотите ли улучшить свой замок?(Да/Нет )')
+        if wish == 'Да':
+            self.castle.upg()
+        elif wish == 'Нет':
+            print('Замок остался прежним')
+            
+
+
+red_player = Player(1, red_castle)
+yellow_player = Player(2, yellow_castle)
+green_player = Player(3, green_castle)
+blue_player = Player(4, blue_castle)
+
 red_player.buy_army()
+red_player.castle_upg()
