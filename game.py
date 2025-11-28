@@ -34,7 +34,7 @@ class Castle:
     def __init__ (self, index):
         self.index = index
         self.hp = 100000
-        self.money = 10000000
+        self.money = 1000000
         self.army = []
         self.upg_price = 50000
         
@@ -91,27 +91,27 @@ class Hero:
                 if skeleton.hp <= 0:
                     skeleton.hp = 0
                     self.castle.money += 100
-                    print('Вы убили скелета')
+                    print('Ваш герой убил скелета')
                 else:
-                    print('Вы недостаточно сильны,чтобы убить его')
+                    print('Ваш герой недостаточно силён ,чтобы убить его')
             if npc_selector == 'dragon':
                 self.hp -= dragon.dmg
                 dragon.hp -= self.dmg
                 if dragon.hp <= 0:
                     dragon.hp = 0
                     self.castle.money += 25000
-                    print('Вы убили дракона')
+                    print('Ваш герой убил дракона')
                 else:
-                    print('Вы недостаточно сильны,чтобы убить его')
+                    print('Ваш герой недостаточно силён ,чтобы убить его')
             if npc_selector == 'goblin':
                 self.hp -= goblin.dmg
                 goblin.hp -= self.dmg
                 if goblin.hp <= 0:
                     goblin.hp = 0
                     self.castle.money += 200
-                    print('Вы убили гоблина')
+                    print('Ваш герой убил гоблина')
                 else:
-                    print('Вы недостаточно сильны,чтобы убить его')
+                    print('Ваш герой недостаточно силён ,чтобы убить его')
 
     
 red_hero = Hero(1, red_castle)
