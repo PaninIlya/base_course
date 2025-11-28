@@ -28,17 +28,7 @@ dragon = NPC(500, 200)
 goblin = NPC(50, 50)
 
 
-class Hero:
-    def __init__(self, index):
-        self.index = index
-        self.hp = 500
-        self.dmg = 400
-        self.army = []
-    
-red_hero = Hero(1)
-yellow_hero = Hero(2)
-green_hero = Hero(3)
-blue_hero = Hero(4)
+
 
 class Castle:
     def __init__ (self, index):
@@ -71,6 +61,7 @@ class Castle:
             self.hp += 50000
             self.money -= self.upg_price
             print(f'У вас осталось денег : {self.money}')
+            print(f'Хп вашего замка теперь = {self.hp}')
         else:
             print('У вас недостаточно денег')
 
@@ -81,7 +72,54 @@ yellow_castle = Castle(2)
 green_castle = Castle(3)
 blue_castle = Castle(4)           
 
+class Hero:
+    def __init__(self, index, castle):
+        self.index = index
+        self.hp = 500
+        self.dmg = 400
+        self.army = []
+        self.castle = castle
 
+
+    def attack_npc(self):
+        wish = input('Хотите ли вы атаковать NPC?(Да/Нет):')
+        if wish == 'Да':
+            npc_selector = input('Кого хотите атаковать?(skeleton/dragon/goblin):')
+            if npc_selector == 'skeleton':
+                self.hp -= skeleton.dmg
+                skeleton.hp -= self.dmg
+                if skeleton.hp <= 0:
+                    skeleton.hp = 0
+                    self.castle.money += 100
+                    print('Вы убили скелета')
+                else:
+                    print('Вы недостаточно сильны,чтобы убить его')
+            if npc_selector == 'dragon':
+                self.hp -= dragon.dmg
+                dragon.hp -= self.dmg
+                if dragon.hp <= 0:
+                    dragon.hp = 0
+                    self.castle.money += 25000
+                    print('Вы убили дракона')
+                else:
+                    print('Вы недостаточно сильны,чтобы убить его')
+            if npc_selector == 'goblin':
+                self.hp -= goblin.dmg
+                goblin.hp -= self.dmg
+                if goblin.hp <= 0:
+                    goblin.hp = 0
+                    self.castle.money += 200
+                    print('Вы убили гоблина')
+                else:
+                    print('Вы недостаточно сильны,чтобы убить его')
+
+    
+red_hero = Hero(1, red_castle)
+yellow_hero = Hero(2, yellow_castle)
+green_hero = Hero(3, green_castle)
+blue_hero = Hero(4, blue_castle)
+
+red_hero.attack_npc()
 
 class Player:    
     def __init__ (self,color, castle):
