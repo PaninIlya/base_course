@@ -20,7 +20,6 @@ class Warrior:
 
 
 
-
 class NPC:
     def __init__(self, hp, dmg):
         self.hp = hp
@@ -46,7 +45,16 @@ class Castle:
     def buy_army(self):
         while True:
             print(f'Ваши деньги:{self.money}')
+            print('''
+                    ==========================================================
+                    |   Human      |    |  Giant       |    |   Archer      |
+                    |   HP = 50    |    |  HP = 500    |    |   HP = 45     |
+                    |   DMG = 25   |    |  DMG = 250   |    |   DMG = 80    |
+                    |   PRICE = 25 |    |  PRICE =300  |    |   PRICE = 80  |
+                    ==========================================================                  
+   ''' )
             self.choice = int(input(f"Кого вы хотите купить(Выберите цифру)?:{warriors_list}:\n"))
+
             if self.choice == 0:
                 break
             self.kol = int(input('Сколько ?:'))
@@ -104,6 +112,13 @@ class Hero:
 
 
     def attack_npc(self):
+        print('''
+                    ==========================================================
+                    |   Skeleton   |    |  Dragon      |    |   Goblin      |
+                    |   HP = 20    |    |  HP = 500    |    |   HP = 50     |
+                    |   DMG = 10   |    |  DMG = 200   |    |   DMG = 450   |
+                    ==========================================================    
+   ''' )
         wish = input('Хотите ли вы атаковать NPC?(Да/Нет):')
         while wish == 'Да':
             npc_selector = input('Кого хотите атаковать?(skeleton/dragon/goblin):')
@@ -170,6 +185,7 @@ class Hero:
         print('Ваш герой умер, но вы получите нового(но без усилений)')
         self.hp = 500
         self.dmg = 400
+        print(f'Ваш новый герой: Хп {self.hp}, а урон {self.dmg}')
     
 
 
@@ -223,6 +239,7 @@ class Player:
     def new_hero(self):
         if self.hero.hp <= 0:
             self.hero.death()
+            print(f'Хп вашего героя {self.hero.hp}, а урон {self.hero.dmg}')
             
         else:
             print('Ваш герой еще жив')
