@@ -46,7 +46,7 @@ class Castle:
     def buy_army(self):
         while True:
             print(f'Ваши деньги:{self.money}')
-            self.choice = int(input(f"Кого вы хотите купить?:{warriors_list}:\n"))
+            self.choice = int(input(f"Кого вы хотите купить(Выберите цифру)?:{warriors_list}:\n"))
             if self.choice == 0:
                 break
             self.kol = int(input('Сколько ?:'))
@@ -229,9 +229,9 @@ class Player:
 
 
 red_player = Player(1, red_castle, red_hero)
-yellow_player = Player(2, yellow_castle, yellow_castle)
-green_player = Player(3, green_castle, green_castle)
-blue_player = Player(4, blue_castle, blue_castle)
+yellow_player = Player(2, yellow_castle, yellow_hero)
+green_player = Player(3, green_castle, green_hero)
+blue_player = Player(4, blue_castle, blue_hero)
 
 red_player.buy_army()
 red_player.castle_upg()
