@@ -1,8 +1,8 @@
 color_list = {1:'Red',2:'Yellow',3:'Green',4:'Blue'}
 warriors_list = {1:"Human", 2:"Giant", 3:"Archer"}
 class Warrior:
-    def __init__ (self,type, index, castle):
-        self.castle = castle
+    def __init__ (self,type, index):
+        
         self.type = type
         self.index = index
         if self.type == "Human":
