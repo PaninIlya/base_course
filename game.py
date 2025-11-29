@@ -79,11 +79,23 @@ class Hero:
         self.dmg = 400
         self.army = []
         self.castle = castle
+        self.upg_price = 10000
+
+
+    def hero_upg(self):
+        if self.castle.money > self.upg_price:
+                self.castle.money -= self.upg_price
+                self.hp += 200
+                self.dmg += 400
+                print(f'Теперь хп вашего героя {self.hp}, а урон {self.dmg}')
+                print(f'У вас осталось денег : {self.castle.money}')
+        else:
+            print('У вас не хватает денег')
 
 
     def attack_npc(self):
         wish = input('Хотите ли вы атаковать NPC?(Да/Нет):')
-        if wish == 'Да':
+        while wish == 'Да':
             npc_selector = input('Кого хотите атаковать?(skeleton/dragon/goblin):')
             if npc_selector == 'skeleton':
                 self.hp -= skeleton.dmg
@@ -92,8 +104,11 @@ class Hero:
                     skeleton.hp = 0
                     self.castle.money += 100
                     print('Ваш герой убил скелета')
+                    print(f'ХП вашего героя {self.hp}')
+                    wish = input('Хотите ли вы атаковать NPC?(Да/Нет):')
                 else:
                     print('Ваш герой недостаточно силён ,чтобы убить его')
+                    wish = input('Хотите ли вы атаковать NPC?(Да/Нет):')
             if npc_selector == 'dragon':
                 self.hp -= dragon.dmg
                 dragon.hp -= self.dmg
@@ -101,8 +116,11 @@ class Hero:
                     dragon.hp = 0
                     self.castle.money += 25000
                     print('Ваш герой убил дракона')
+                    print(f'ХП вашего героя {self.hp}')
+                    wish = input('Хотите ли вы атаковать NPC?(Да/Нет):')
                 else:
                     print('Ваш герой недостаточно силён ,чтобы убить его')
+                    wish = input('Хотите ли вы атаковать NPC?(Да/Нет):')
             if npc_selector == 'goblin':
                 self.hp -= goblin.dmg
                 goblin.hp -= self.dmg
@@ -110,10 +128,20 @@ class Hero:
                     goblin.hp = 0
                     self.castle.money += 200
                     print('Ваш герой убил гоблина')
+                    print(f'ХП вашего героя {self.hp}')
+                    wish = input('Хотите ли вы атаковать NPC?(Да/Нет):')
                 else:
                     print('Ваш герой недостаточно силён ,чтобы убить его')
+                    wish = input('Хотите ли вы атаковать NPC?(Да/Нет):')
+            if wish == 'Нет':
+                break
+    def death(self):
+        if self.hp<=0:
+            self.hp = 500
+            self.dmg = 400
+            print('Теперь у вас новый герой(все улучшения пропали)')
 
-    
+
 red_hero = Hero(1, red_castle)
 yellow_hero = Hero(2, yellow_castle)
 green_hero = Hero(3, green_castle)
@@ -122,9 +150,10 @@ blue_hero = Hero(4, blue_castle)
 red_hero.attack_npc()
 
 class Player:    
-    def __init__ (self,color, castle):
+    def __init__ (self,color, castle, hero):
         self.color = color
         self.castle = castle
+        self.hero = hero
 
 
     def buy_army(self):
@@ -137,19 +166,37 @@ class Player:
         elif self.color == 4:
             blue_castle.buy_army()
 
+
     def castle_upg(self):
-        wish = input('Хотите ли улучшить свой замок?(Да/Нет )')
+        wish = input(f'Хотите ли улучшить свой замок за {self.castle.upg_price}?(Да/Нет )')
         if wish == 'Да':
             self.castle.upg()
         elif wish == 'Нет':
             print('Замок остался прежним')
+
+
+    def hero_upg(self):
+        wish = input(f'Хотите ли вы улучшить героя за {self.hero.upg_price}?(Да/Нет)')
+        if wish == 'Да':
+            self.hero.hero_upg()
+        elif wish == 'Нет':
+            print('Герой остался без измений')
+
+    
+    def new_hero(self):
+        if self.hero.hp <= 0:
+            self.hero.death()
             
+        else:
+            print('Ваш герой еще жив')
 
 
-red_player = Player(1, red_castle)
-yellow_player = Player(2, yellow_castle)
-green_player = Player(3, green_castle)
-blue_player = Player(4, blue_castle)
+red_player = Player(1, red_castle, red_hero)
+yellow_player = Player(2, yellow_castle, yellow_castle)
+green_player = Player(3, green_castle, green_castle)
+blue_player = Player(4, blue_castle, blue_castle)
 
 red_player.buy_army()
 red_player.castle_upg()
+red_player.hero_upg()
+red_player.new_hero()
