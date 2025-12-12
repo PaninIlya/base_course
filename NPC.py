@@ -14,26 +14,19 @@ def npc_stats():
 
 class NPC:
 
-    def __init__ (self, type):
+    def __init__ (self, type, dmg , hp, price):
         self.type = type
-        npc = {'skeleton': 0, 'goblin': 0, 'dragon': 0}
-        if self.type == 'skeleton':
-            self.hp = 50
-            self.dmg = 25
-        elif self.type == 'goblin':
-            self.hp = 150
-            self.dmg = 75
-        elif self.type == 'dragon':
-            self.hp = 600
-            self.dmg = 350
+        self.dmg = dmg
+        self.hp = hp
+        self.price = price
+        # npc = {'skeleton': 0, 'goblin': 0, 'dragon': 0}
 
     def __str__(self):
         return self.type
     
 
-skeleton = NPC('skeleton')
-goblin = NPC('goblin')
-dragon = NPC('dragon')
-
+skeleton = NPC('skeleton', 50, 100, 250)
+goblin = NPC('goblin', 100, 250, 400)
+dragon = NPC('dragon', 500, 1000, 5000)
 stats = npc_stats()
 print(stats)
