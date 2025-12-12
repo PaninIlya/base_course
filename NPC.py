@@ -4,9 +4,9 @@ def npc_stats():
                |      Скелет        |         Гоблин      |         Дракон       |  
                |==================================================================
                |                    |                     |                      |                     
-               |hp = {skeleton.hp}  |  hp = {goblin.hp}   |  hp = {dragon.hp}    |  
+               |    hp = {skeleton.hp}        |       hp = {goblin.hp}      |        hp = {dragon.hp}     |     
                |                    |                     |                      |                    
-               |dmg = {skeleton.dmg}|  dmg = {goblin.dmg} |  dmg = {dragon.dmg}  |   
+               |    dmg = {skeleton.dmg}        |       dmg = {goblin.dmg}     |        dmg = {dragon.dmg}     |     
                |==================================================================
           
           

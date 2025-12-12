@@ -50,15 +50,15 @@ class Castle:
     def __str__(self):
         return self.color
 
-red = Castle('red')
-green = Castle('green')
+# red = Castle('red')
+# green = Castle('green')
 
 stat = stats()
 print(stat)
 
 
-red.army_creation(Human, 10)
-green.army_creation(Canon, 10)
+# red.army_creation(Human, 10)
+# green.army_creation(Canon, 10)
 
 
 

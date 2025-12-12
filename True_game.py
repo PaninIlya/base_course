@@ -8,8 +8,12 @@ from Army import *
 #Герой может: сам атаковать npc(метод attack_npc), атаковать npc с армией из замка(army_attack_npc) и атаковать армию другого игрока(army_attack_player)
 #в методе unit_type класса Castle есть 3 варианта: Human, Giant, Canon
 #NPC: skeleton, dragon, goblin
+#в методе army_attack_player в качестве параметров передаются замки игроков,которые хотят вступить в бой
 cas = Castle('dima')
 hero = Hero('lol')
 hero2 = Hero('im')
 cas2 = Castle("vasaya")
-cas.army_creation()
+cas.army_creation(Human, 100)
+cas2.army_creation(Canon, 100)
+hero.army_attack_player(cas, cas2)
+hero.army_attack_npc(dragon, 1000, cas)

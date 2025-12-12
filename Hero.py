@@ -1,7 +1,7 @@
 from NPC import NPC 
 from NPC import skeleton, dragon, goblin
 from Army import Army
-from Castle import Castle, red, green
+from Castle import *
 
 
 class Hero:
@@ -28,9 +28,11 @@ class Hero:
             print('Ваш герой недстаточно силен')
 
 
-    def army_attack_npc(self, type, kol,current_castle, npc):
-        self.type = type
+    def army_attack_npc(self, npc,  kol,current_castle):
+        self.npc = npc
+
         self.kol = kol
+        self.current_castle = current_castle
         hp = current_castle.hp + self.hp
         
         if hp > npc.dmg * self.kol:
@@ -38,9 +40,10 @@ class Hero:
             hp -= npc.dmg * self.kol
             current_castle.money += npc.price * self.kol
             print(f"Вы убили {npc}")
+            print(f'Ваши деньги: {current_castle.money}')
 
         else:
-            print('Ваша армия слишком слаба')
+            print(f'Ваша армия слишком слаба для атаки {self.kol} {self.npc}')
 
     def army_attack_player(self, hero1, hero2):
 
@@ -96,12 +99,12 @@ class Hero:
         
 
 
-hero = Hero('lol')
-hero.attack_npc(skeleton, 20, red)
+# hero = Hero('lol')
+# hero.attack_npc(skeleton, 20, red)
 
-# hero1 = Hero('hero1')
-# hero2 = Hero("hero2")
-hero.army_attack_player(red, green)
+# # hero1 = Hero('hero1')
+# # hero2 = Hero("hero2")
+# hero.army_attack_player(red, green)
 
 # red.army_creation("Human", 150)
 # hero.army_attack_npc('Dragon',20 , red, skeleton)
