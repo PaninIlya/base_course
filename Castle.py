@@ -35,14 +35,14 @@ class Castle:
             self.hp += unit_type.hp * self.kol
             self.army[unit_type.type] += self.kol
             print(f'''
-                ==========================================
-                       │  Урон армии: {self.dmg}       │
-                       │  Здоровье армии: {self.army_hp} │
-                ==========================================        
+                        =====================================
+                       │  Урон армии игрока {self.color}: {self.dmg}     │
+                       │  Здоровье армии игрока {self.color}: {self.army_hp} │
+                        =====================================
               
               ''')
-            print(self.army)
-            print(f"У вас осталось {self.money} денег")
+            print(f'Армия игрока {self.color}: {self.army}')
+            print(f"У игрока {self.color} осталось {self.money} денег")
         else:
             self.money = 0
             print('У вас нет денег')
@@ -55,6 +55,7 @@ green = Castle('green')
 
 stat = stats()
 print(stat)
+
 
 red.army_creation(Human, 10)
 green.army_creation(Canon, 10)

@@ -14,7 +14,7 @@ class Hero:
         self.army_hp = 0
     
 
-    def attack_npc(self , npc, current_castle, kol):
+    def attack_npc(self , npc,  kol, current_castle,):
         self.npc = npc
         self.current_castle = current_castle
         self.kol = kol
@@ -36,6 +36,7 @@ class Hero:
         if hp > npc.dmg * self.kol:
             print(f'Castle {self.hp}')
             hp -= npc.dmg * self.kol
+            current_castle.money += npc.price * self.kol
             print(f"Вы убили {npc}")
 
         else:
@@ -58,9 +59,18 @@ class Hero:
                             ===============================
 
 
+                            ================================ 
+                                Игрок {hero1} проиграл
+                            ===============================
+
                              ''')
+                        hero2.money += hero1.money
+                        hero1.money = 0
                         hero1.hp = 0
-                        print(f"у армии замка {hero1} остлось {hero1.hp} здоровья")
+                        print(f"у армии замка {hero1} осталось {hero1.hp} здоровья")
+                        print(f'У игрока {hero2} теперь столько денег: {hero2.money}')
+                        print(f'У игрока {hero1} теперь столько денег: {hero1.money}')
+                        
                         break
                     elif hero2.hp <= 0:
                         print(f'''
@@ -68,10 +78,18 @@ class Hero:
                               Победила армия игрока {hero1}
                              ==============================
 
+                             
+                            =============================== 
+                                Игрок {hero2} проиграл
+                            ===============================
 
                             ''')
+                        hero1.money += hero2.money
+                        hero2.money = 0
                         hero2.hp = 0
                         print (f"у армии замка {hero2} осталось {hero2.hp} здоровья")
+                        print(f'У игрока {hero2} теперь столько денег: {hero2.money}')
+                        print(f'У игрока {hero1} теперь столько денег: {hero1.money}')
                         break
         
         
@@ -79,7 +97,7 @@ class Hero:
 
 
 hero = Hero('lol')
-hero.attack_npc(skeleton, red, 20)
+hero.attack_npc(skeleton, 20, red)
 
 # hero1 = Hero('hero1')
 # hero2 = Hero("hero2")

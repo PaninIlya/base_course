@@ -8,7 +8,7 @@ class Player:
     def __init__(self, color):
         self.color = color
 
-        self.money = 500000
+        
 
 
     # def buy_army(self, type, kol):
