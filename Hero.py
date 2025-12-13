@@ -7,8 +7,8 @@ from Castle import *
 class Hero:
     def __init__(self,color):
         self.color = color
-        self.hp = 1000
-        self.dmg =600
+        self.hp = 10000
+        self.dmg =1500
         self.army = {'Human': 0, 'Giant': 0, 'Canon': 0}
         self.army_dmg = 0
         self.army_hp = 0
@@ -18,9 +18,9 @@ class Hero:
         self.npc = npc
         self.current_castle = current_castle
         self.kol = kol
-        if self.hp >  npc.dmg and self.dmg > npc.hp:
+        if self.hp >  npc.dmg*self.kol and self.dmg > npc.hp*self.kol:
             npc.hp = 0
-            self.hp -= npc.dmg
+            self.hp -= npc.dmg*self.kol
             current_castle.money += npc.price * self.kol
             print(f'Ваш герой убил {self.kol} {npc}(ов)')
             print(f"Ваше кол-во денег : {current_castle.money}")

@@ -32,7 +32,7 @@ class Player:
     #     if self.money < Army(self.type).price * self.kol:
     #         print(f'У вас нет деняк на {Army(self.type)}')
 
-
+    
 pl1 = Player('red')
 # pl1.buy_army('Human', 1000)
 

@@ -50,6 +50,7 @@ class Castle:
     def upgrade_your_castle(self):
         if self.money > 100000:
             self.hp += 50000
+            self.money -= 100000
             print(f'Теперь хп вашего замка {self.hp}')
         else:
             print(f'Вам не хватает {100000-self.money}')
