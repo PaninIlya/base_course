@@ -239,3 +239,16 @@ red_player.buy_army()
 red_player.castle_upg()
 red_player.hero_upg()
 red_player.new_hero()
+
+    # def attack_npc(self , npc,  kol, current_castle,):
+    #     self.npc = npc
+    #     self.current_castle = current_castle
+    #     self.kol = kol
+    #     if self.hp >  npc.dmg*self.kol and self.dmg > npc.hp*self.kol:
+    #         npc.hp = 0
+    #         self.hp -= npc.dmg*self.kol
+    #         current_castle.money += npc.price * self.kol
+    #         print(f'Ваш герой убил {self.kol} {npc}(ов)')
+    #         print(f"Ваше кол-во денег : {current_castle.money}")
+    #     else:
+    #         print('Ваш герой недстаточно силен')

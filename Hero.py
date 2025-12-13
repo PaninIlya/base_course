@@ -25,7 +25,8 @@ class Hero:
             print(f'Ваш герой убил {self.kol} {npc}(ов)')
             print(f"Ваше кол-во денег : {current_castle.money}")
         else:
-            print('Ваш герой недстаточно силен')
+            self.hp = 0
+            print(f'Ваш герой умер, {self.kol} {self.npc} оказались слишком сильны')
 
 
     def army_attack_npc(self, npc,  kol,current_castle):
@@ -94,12 +95,22 @@ class Hero:
                         print(f'У игрока {hero2} теперь столько денег: {hero2.money}')
                         print(f'У игрока {hero1} теперь столько денег: {hero1.money}')
                         break
+    def upgrade_your_hero(self,  current_castle):
         
+        self.current_castle = current_castle
+        if self.current_castle.money > 100000:
+            self.hp += 5000
+            self.dmg += 2000
+            self.current_castle.money -= 100000
+            print(f'Теперь хп вашего героя {self.hp}, а урон {self.dmg}')
+            print(f'У вас осталось {self.current_castle.money} денег')
+        else:
+            print(f'Вам не хватает {100000-self.current_castle.money}')
         
         
 
 
-# hero = Hero('lol')
+hero = Hero('lol')
 # hero.attack_npc(skeleton, 20, red)
 
 # # hero1 = Hero('hero1')
@@ -108,3 +119,6 @@ class Hero:
 
 # red.army_creation("Human", 150)
 # hero.army_attack_npc('Dragon',20 , red, skeleton)
+# hero = Hero('adad')
+# hero.attack_npc(dragon, 80800, red)
+hero.upgrade_your_hero(red)
