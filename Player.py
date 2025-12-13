@@ -1,7 +1,7 @@
 from Army import Army
 from Army import Human, Giant, Canon
-from Castle import Castle, red
-
+from Castle import Castle
+from Hero import *
 
 
 class Player:
@@ -32,8 +32,12 @@ class Player:
     #     if self.money < Army(self.type).price * self.kol:
     #         print(f'У вас нет деняк на {Army(self.type)}')
     
-
-pl1 = Player('red')
+    def revive_your_hero(self, hero):
+        self.hero = hero
+        hero.hp = 10000
+        hero.dmg = 1500
+        print(f'Ваш герой был оживлен с начальными характеристиками')
+# pl1 = Player('red')
 # pl1.buy_army('Human', 1000)
 
 

@@ -2,7 +2,7 @@ from Army import Army, Human, Giant, Canon
 
 army = {'Human': 0, 'Giant': 0, 'Canon': 0}
 
-def stats():
+def castle_start_stats():
     print(f'''
                         ===================================
                        │ Начальное здоровье вашего замка:  │
@@ -41,7 +41,11 @@ class Castle:
                         =====================================
               
               ''')
-            print(f'Армия игрока {self.color}: {self.army}')
+            print(f'''
+                  ======================================================
+                  Армия игрока {self.color}: {self.army}
+                  ======================================================
+                ''')
             print(f"У игрока {self.color} осталось {self.money} денег")
         else:
             self.money = 0
@@ -56,20 +60,28 @@ class Castle:
             print(f'Вам не хватает {100000-self.money}')
     
 
+    # def revive_your_hero(self, hero):
+    #     self.hero = hero
+    #     hero.hp = 10000
+    #     hero.dmg = 1500
+    #     print(f'Ваш герой был оживлен с начальными характеристиками')
+
+    
+
     def __str__(self):
         return self.color
 
 red = Castle('red')
 # green = Castle('green')
 
-stat = stats()
-print(stat)
 
 
-# red.army_creation(Human, 10)
+
+red.army_creation(Human, 10)
 # green.army_creation(Canon, 10)
 
 # red.upgrade_your_castle()
+# red.revive_your_hero(hero)
 
 
 
