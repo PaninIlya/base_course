@@ -9,6 +9,8 @@ def castle_start_stats():
                        │              50000                │
                        │Уровень его защиты(урон армии):    │
                        │                0                  │
+                       │        Денег в казне:             │
+                       │              450000               │
                         ===================================
           
           ''')
@@ -55,7 +57,11 @@ class Castle:
         if self.money > 100000:
             self.hp += 50000
             self.money -= 100000
-            print(f'Теперь хп вашего замка {self.hp}')
+            print(f'''
+                  ================================
+                    Теперь хп замка {self.color} {self.hp}
+                  ================================  
+''')
         else:
             print(f'Вам не хватает {100000-self.money}')
     
@@ -71,13 +77,13 @@ class Castle:
     def __str__(self):
         return self.color
 
-red = Castle('red')
+# red = Castle('red')
 # green = Castle('green')
 
 
 
 
-red.army_creation(Human, 10)
+# red.army_creation(Human, 10)
 # green.army_creation(Canon, 10)
 
 # red.upgrade_your_castle()

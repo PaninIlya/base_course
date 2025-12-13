@@ -28,5 +28,5 @@ class NPC:
 skeleton = NPC('skeleton', 50, 100, 250)
 goblin = NPC('goblin', 100, 250, 400)
 dragon = NPC('dragon', 500, 1000, 5000)
-stats = npc_stats()
-print(stats)
+# stats = npc_stats()
+# print(stats)

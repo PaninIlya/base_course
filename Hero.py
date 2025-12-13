@@ -43,7 +43,7 @@ class Hero:
         hp = current_castle.hp + self.hp
         
         if hp > npc.dmg * self.kol:
-            print(f'Castle {self.hp}')
+            print(f'Ваше общее здоровье: {self.hp}')
             hp -= npc.dmg * self.kol
             current_castle.money += npc.price * self.kol
             print(f"Вы убили {npc}")
@@ -100,6 +100,7 @@ class Hero:
                         print (f"у армии замка {castle2} осталось {castle2.hp} здоровья")
                         print(f'У игрока {castle2} теперь  {castle2.money} денег')
                         print(f'У игрока {castle1} теперь  {castle1.money} денег')
+                    
                         break
     def upgrade_your_hero(self,  current_castle):
         
@@ -109,9 +110,9 @@ class Hero:
             self.dmg += 2000
             self.current_castle.money -= 100000
             print(f'''
-                  ===================================================
-                  Теперь хп вашего героя: {self.hp}|  урон: {self.dmg}
-                  ===================================================
+                  =========================================
+                  Теперь хп героя {self.color}: {self.hp}|  урон: {self.dmg}
+                  =========================================
                 ''')
             print(f'У вас осталось {self.current_castle.money} денег ')
         else:
