@@ -18,7 +18,7 @@ frames = 180
 coords = np.zeros((frames, 2))
 
 def animate(i):
-    coords[i] = circle_move(R=2, angle_vel=1, time=i)
+    coords[i] = circle_move(R=5, angle_vel=1, time=i)
     ball.set_data([coords[i][0]], [coords[i][1]])#текущие значения
     ball_line.set_data([coords[:i,0]], [coords[:i,1]])#все значения до текущего
     return ball, ball_line
