@@ -1,12 +1,13 @@
 def decorator(n):
-    def f(func):
-        def f2(n2):
-            print(n + func(n2))
-        return f2
-    return f
+    def wrapper(func):
+        def chislo(x):           
+            result = n + func(x)
+            return result
+        return chislo
+    return wrapper
 
-@decorator(9)
-def s(n2):
-    return n2
+@decorator(100)  
+def get_number(x):
+    return x  
 
-s(100)
+print(get_number(89))  
