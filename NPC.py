@@ -20,6 +20,8 @@ class NPC:
         self.hp = hp
         self.price = price
         # npc = {'skeleton': 0, 'goblin': 0, 'dragon': 0}
+    
+    
 
     def __str__(self):
         return self.type
