@@ -1,4 +1,4 @@
-def decorator(n):
+def summator(n):
     def wrapper(func):
         def chislo(x):           
             result = n + func(x)
@@ -6,7 +6,7 @@ def decorator(n):
         return chislo
     return wrapper
 
-@decorator(100)  
+@summator(100)  
 def get_number(x):
     return x  
 
