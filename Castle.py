@@ -2,6 +2,22 @@ from Army import Army, Human, Giant, Canon
 
 army = {'Human': 0, 'Giant': 0, 'Canon': 0}
 
+
+# def ramochka_decorator(func):
+#     print(f'''
+          
+#           ===================================
+#           │                                  │                                   
+#           │                                  │  
+#           │                                  │  
+#           │                                  │  
+#           │                                  │  
+#           │                                  │  
+#           ===================================
+          
+#           ''')
+
+
 def castle_start_stats():
     print(f'''
                         ===================================
