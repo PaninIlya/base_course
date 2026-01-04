@@ -13,7 +13,7 @@ def start_hero_stats():
         ''')
 
 def timer_decorator(func):
-    """Измеряет время  боя"""
+    
     def wrapper(*args, **kwargs):
         start_time = time.time()
         result = func(*args, **kwargs)
