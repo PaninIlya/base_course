@@ -15,11 +15,9 @@ def debug(func):
 
 debug_sqrt = debug(math.sqrt)
 
-# @debug
-# def debug_factorial():
-#     return math.factorial
 
-def show_debug_function(terms=5):
+
+def show_debug_function(terms=10):
     return [debug_sqrt(n) for n in range(terms+1)]
 
 show_debug_function()
