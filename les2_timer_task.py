@@ -3,7 +3,7 @@ def timer_decorator(func):
     def fnc():
         timer = time.time()
         func()
-        print(time.time() - timer)
+        print(f'Функция работала {time.time() - timer} секунд')
     return fnc
 
 @timer_decorator
