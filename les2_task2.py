@@ -1,4 +1,4 @@
-def decorator(func):
+def calculator(func):
     def f(n1, n2, math_sign):
         if math_sign == '+':
             print(n1 + n2)
@@ -13,7 +13,7 @@ def decorator(func):
             print(n1-n2)  
     return f
 
-@decorator
+@calculator
 def two_variables(n1, n2, math_sign):
     return n1, n2, math_sign
 
