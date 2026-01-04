@@ -1,5 +1,5 @@
 def calculator(func):
-    def f(n1, n2, math_sign):
+    def wrapper_f(n1, n2, math_sign):
         if math_sign == '+':
             print(n1 + n2)
             
@@ -11,7 +11,7 @@ def calculator(func):
             
         elif math_sign == '-':
             print(n1-n2)  
-    return f
+    return wrapper_f
 
 @calculator
 def two_variables(n1, n2, math_sign):
