@@ -2,6 +2,7 @@ from NPC import NPC
 from NPC import skeleton, dragon, goblin
 from Army import Army
 from Castle import *
+import time
 
 def start_hero_stats():
      print(f'''
@@ -10,6 +11,37 @@ def start_hero_stats():
             Урон: 1500
 
         ''')
+
+def timer_decorator(func):
+    """Измеряет время  боя"""
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        
+        duration = end_time - start_time
+        print(f"Бой длился: {duration:.2f} секунд")
+        
+      
+        
+        return result
+    return wrapper
+     
+
+def decorator_attack_player(func):
+    def wrapper(self, castle1, castle2):
+        print(f'\n{"⋈"*50}')  
+        print('             Игроки вступили в бой!')
+        print(f'                {castle1.color} vs {castle2.color}')
+        print(f'{"⋈"*50}')  
+        result = func(self, castle1, castle2)
+        print(f'{"⋈"*50}')
+        print('             Бой закончен!')
+        print(f'{"⋈"*50}')
+        return result
+    return wrapper
+
+
 class Hero:
     def __init__(self,color):
         self.color = color
@@ -19,7 +51,7 @@ class Hero:
         self.army_dmg = 0
         self.army_hp = 0
     
-
+    
     def attack_npc(self , npc,  kol, current_castle,):
         self.npc = npc
         self.current_castle = current_castle
@@ -34,7 +66,7 @@ class Hero:
             self.hp = 0
             print(f'Ваш герой умер, {self.kol} {self.npc} оказались слишком сильны')
 
-
+    
     def army_attack_npc(self, npc,  kol,current_castle):
         self.npc = npc
 
@@ -46,62 +78,111 @@ class Hero:
             print(f'Ваше общее здоровье: {self.hp}')
             hp -= npc.dmg * self.kol
             current_castle.money += npc.price * self.kol
-            print(f"Вы убили {npc}")
+            print(f"Вы убили {self.kol} {npc}")
             print(f'Ваши деньги: {current_castle.money}')
 
         else:
             print(f'Ваша армия слишком слаба для атаки {self.kol} {self.npc}')
 
+    
+
+    @timer_decorator
+    @decorator_attack_player
     def army_attack_player(self, castle1, castle2):
-
-            while castle1.hp > 0 or castle2.hp > 0:
-
-                
-                    castle1.hp -= castle2.dmg  
-                    castle2.hp -= castle1.dmg 
-                    print(f"у армии замка {castle1} осталось { max(castle1.hp,0)} здоровья")
-                    print (f"у армии замка {castle2} осталось {max(castle2.hp,0)} здоровья")
+        round_num = 1
+        
+        
+        castle1_hp = castle1.hp
+        castle2_hp = castle2.hp
+        
+        print(f"\nНачало битвы!")
+        print(f"{castle1.color}: {castle1_hp} HP, Урон: {castle1.dmg}")
+        print(f"{castle2.color}: {castle2_hp} HP, Урон: {castle2.dmg}")
+        
+        while castle1_hp > 0 and castle2_hp > 0:  
+            print(f"\n{'='*40}")
+            print(f"Раунд {round_num}")
+            print(f"{'='*40}")
             
-                    if castle1.hp <= 0:
-                        print(f'''
-                            =============================== 
-                              Победила армия замка {castle2}
-                            ===============================
+            
+            time.sleep(0.8)
+            damage1 = castle1.dmg
+            castle2_hp -= damage1
+            print(f"⚔️  {castle1.color} атакует на {damage1} урона!")
+            print(f"❤️  У {castle2.color} осталось {max(castle2_hp, 0)} HP")
+            
+            if castle2_hp <= 0:
+                time.sleep(0.8)
+                print(f"\n💥 {castle2.color} уничтожен!")
+                break
+            
+            
+            time.sleep(0.8)
+            damage2 = castle2.dmg
+            castle1_hp -= damage2
+            print(f"⚔️  {castle2.color} атакует на {damage2} урона!")
+            print(f"❤️  У {castle1.color} осталось {max(castle1_hp, 0)} HP")
+            
+            if castle1_hp <= 0:
+                time.sleep(0.8)
+                print(f"\n💥 {castle1.color} уничтожен!")
+                break
+            
+            round_num += 1
+            time.sleep(1.0)  
+        
+        
+        time.sleep(1.0)
+        print(f"\n{'='*50}")
+        print("Битва окончена")
+        print(f"{'='*50}")
+        
+        if castle1_hp <= 0 and castle2_hp <= 0:
+            print("🏳️ НИЧЬЯ! Оба замка уничтожены!")
+            castle1.hp = 0
+            castle2.hp = 0
+            
+        elif castle1_hp <= 0:
+            print(f"🎉 ПОБЕДИТЕЛЬ: {castle2.color}!")
+            print(f"🏆 {castle1.color} проиграл")
+            
+            
+            castle1.hp = 0
+            castle2.hp = max(castle2_hp, 0)
+            
+            
+            castle2.money += castle1.money
+            castle1.money = 0
+            
+            print(f"💰 {castle2.color} получает все деньги {castle1.color}!")
+            
+        else:  
+            print(f"🎉 ПОБЕДИТЕЛЬ: {castle1.color}!")
+            print(f"🏆 {castle2.color} проиграл")
+            
+            
+            castle2.hp = 0
+            castle1.hp = max(castle1_hp, 0)
+            
+            
+            castle1.money += castle2.money
+            castle2.money = 0
+            
+            print(f"💰 {castle1.color} получает все деньги {castle2.color}!")
+        
+        
+        time.sleep(0.8)
+        print(f"\n📊 Итоги боя:")
+        print(f"{'-'*30}")
+        print(f"{castle1.color}:")
+        print(f"  HP: {castle1.hp}")
+        print(f"  Деньги: {castle1.money}")
+        print(f"{castle2.color}:")
+        print(f"  HP: {castle2.hp}")
+        print(f"  Деньги: {castle2.money}")
+        
+        return True
 
-
-                            ================================ 
-                                Игрок {castle1} проиграл
-                            ===============================
-
-                             ''')
-                        castle2.money += castle1.money
-                        castle1.money = 0
-                        castle1.hp = 0
-                        print(f"у армии замка {castle1} осталось {castle1.hp} здоровья")
-                        print(f'У игрока {castle2} теперь столько денег: {castle2.money}')
-                        print(f'У игрока {castle1} теперь столько денег: {castle1.money}')
-                        
-                        break
-                    elif castle2.hp <= 0:
-                        print(f'''
-                             ============================== 
-                              Победила армия игрока {castle1}
-                             ==============================
-
-                             
-                            =============================== 
-                                Игрок {castle2} проиграл
-                            ===============================
-
-                            ''')
-                        castle1.money += castle2.money
-                        castle2.money = 0
-                        castle2.hp = 0
-                        print (f"у армии замка {castle2} осталось {castle2.hp} здоровья")
-                        print(f'У игрока {castle2} теперь  {castle2.money} денег')
-                        print(f'У игрока {castle1} теперь  {castle1.money} денег')
-                    
-                        break
     def upgrade_your_hero(self,  current_castle):
         
         self.current_castle = current_castle
@@ -125,10 +206,11 @@ class Hero:
 
 
 # hero = Hero('lol')
-# hero.attack_npc(skeleton, 20, red)
+# hero2 = Hero('lol2')
+# # hero.attack_npc(skeleton, 20, red)
 
-# # castle1 = Hero('castle1')
-# # castle2 = Hero("castle2")
+# # # castle1 = Hero('castle1')
+# # # castle2 = Hero("castle2")
 # hero.army_attack_player(red, green)
 
 # red.army_creation("Human", 150)

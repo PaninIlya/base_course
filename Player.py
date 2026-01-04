@@ -37,7 +37,8 @@ class Player:
         hero.hp = 10000
         hero.dmg = 1500
         print(f'Ваш герой был оживлен с начальными характеристиками')
-# pl1 = Player('red')
+pl1 = Player('red')
+pl2 = Player('green')
 # pl1.buy_army('Human', 1000)
 
 
