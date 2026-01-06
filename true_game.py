@@ -1,15 +1,13 @@
-from NPC import NPC, npc_stats, skeleton, dragon, goblin
+from NPC import *
 from Player import Player
-from Castle import castle_start_stats, Castle
-from Hero import Hero, start_hero_stats
+from Castle import *
+from Hero import *
 from Army import Army, Human, Giant, Canon
 from game_help import help
 import time
 
 #чтобы посмотреть документацию, вызовите функцию help()
 help()
-npc_stats()
-castle_start_stats()
 
 pl1 = Player('p1')
 cas1 = Castle('cas1')

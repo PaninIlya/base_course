@@ -132,10 +132,7 @@ class Hero:
             time.sleep(1.0)  
         
         
-        time.sleep(1.0)
-        print(f"\n{'='*50}")
-        print("Битва окончена")
-        print(f"{'='*50}")
+        
         
         if castle1_hp <= 0 and castle2_hp <= 0:
             print("🏳️ НИЧЬЯ! Оба замка уничтожены!")
