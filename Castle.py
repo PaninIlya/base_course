@@ -9,7 +9,7 @@ army = {'Human': 0, 'Giant': 0, 'Canon': 0}
 #           ===================================
 #           │                                  │                                   
 #           │                                  │  
-#           │                                  │  
+#           │            {func()}              │  
 #           │                                  │  
 #           │                                  │  
 #           │                                  │  
@@ -17,7 +17,7 @@ army = {'Human': 0, 'Giant': 0, 'Canon': 0}
           
 #           ''')
 
-
+# @ramochka_decorator
 def castle_start_stats():
     print(f'''
                         ===================================
@@ -39,6 +39,19 @@ class Castle:
         self.army = {'Human': 0, 'Giant': 0, 'Canon': 0}
 
 
+    @staticmethod
+    def castle_start_stats():
+        print(f'''
+                        =====================================    
+                        │ Начальное здоровье вашего замка:  │
+                        │              50000                │
+                        │Уровень его защиты(урон армии):    │
+                        │                0                  │
+                        │        Денег в казне:             │
+                        │              450000               │
+                         ====================================
+            
+            ''')
     def army_creation(self, unit_type, kol):
         self.unit_type = unit_type
         self.kol = kol
@@ -97,7 +110,7 @@ class Castle:
 # green = Castle('green')
 
 
-
+Castle.castle_start_stats()
 
 # red.army_creation(Human, 10)
 # green.army_creation(Canon, 10)
