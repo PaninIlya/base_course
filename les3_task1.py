@@ -38,7 +38,7 @@
 class Business:
 
 
-    def __init__(self, _area='Ресторан', _price= 5000000):
+    def __init__(self, _area=600, _price= 5000000):
         self._area = _area
         self._price = _price
 
@@ -61,22 +61,22 @@ class Businessman:
         self.age = age
 
         self._money = 0
-        self._buisiness = None
+        self._business = None
     
-
+    
     def info(self):
         print(f''' 
                 Имя : {self.name}
                 Возраст: {self.age}
                 Деньги: {self._money}
-                Бизнес: {self._buisiness}
+                Бизнес: {self._business}
                 ''')
 
 
     @staticmethod
     def def_info():
         print(f'''Имя: {Businessman.def_name}
-                  Возраст : {Businessman.def_age}
+Возраст : {Businessman.def_age}
                     ''')
     
     def _make_deal(self, object, cost):
@@ -84,7 +84,7 @@ class Businessman:
         self.object = object
 
         self._money -= self.cost
-        self._buisiness = self.object
+        self._business = self.object
     
 
     def earn_money(self, money_amount):
@@ -96,7 +96,7 @@ class Businessman:
     def buy_business(self, business, discount):
         self.business = business
         self.discount = discount
-        final_price = self.cost - (self.cost * (self.discount/100))
+        final_price = business.final_price(discount)
 
         if self._money > final_price:
              self._make_deal(business, final_price)
@@ -105,3 +105,23 @@ class Businessman:
             print(f'У {self.name} недостаточно денег, чтобы купить бизнес')
 
 
+class RestarauntBusiness(Business):
+    def __init__(self, _price):
+       self.profitability = 50000000
+       super().__init__(_area = 500, _price = _price)
+
+
+
+
+Businessman.def_info()
+
+vasa = Businessman('Петя', 56565)
+vasa.info()
+
+pizza = RestarauntBusiness(5000000)
+
+
+vasa.buy_business(pizza, 50)
+vasa.earn_money(999999999999999)
+vasa.buy_business(pizza, 50)
+vasa.info()
