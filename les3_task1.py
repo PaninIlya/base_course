@@ -1,19 +1,4 @@
 
-class Business:
-
-
-    def __init__(self, _area=600, _price= 5000000):
-        self._area = _area
-        self._price = _price
-
-
-    def final_price(self, discount):
-        self.discount = discount
-        final_price = self._price - (self._price * (self.discount/100))
-
-        return final_price
-    
-
 class Businessman:
 
     def_name = 'Вася'
@@ -68,6 +53,21 @@ class Businessman:
         else:
             print(f'У {self.name} недостаточно денег, чтобы купить бизнес')
 
+
+class Business:
+
+
+    def __init__(self, _area=600, _price= 5000000):
+        self._area = _area
+        self._price = _price
+
+
+    def final_price(self, discount):
+        self.discount = discount
+        final_price = self._price - (self._price * (self.discount/100))
+
+        return final_price
+    
 
 class RestarauntBusiness(Business):
     def __init__(self, _price):
