@@ -6,15 +6,28 @@ class Number1:
         print('add', self.val, other)
         return self.val + other
     
-    #__radd__ = __add__
+    
 
     def __radd__(self, other):
         print('radd', self.val, other)
         return other + self.val
-        #return self.__add__(other)
-        #return self.val + other
-
+    
+    def __sub__(self, other):
+        print('sub', self.val, other)
+        return self.val - other
+       
+    def __rsub__(self, other):
+        print('rsub', self.val, other)
+        return other - self.val
+    
+    def __isub__(self, other):
+        print('isub', self.val, other)
+        self.val -= other
+        return self
+    
 x = Number1(20)
 y = Number1(30)
 print(1 + x)
 print(x + 1)
+x -=1
+print(x)
