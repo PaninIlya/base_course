@@ -23,7 +23,7 @@ class Number1:
     def __isub__(self, other):
         print('isub', self.val, other)
         self.val -= other
-        return self
+        return self.val
     
 x = Number1(20)
 y = Number1(30)
