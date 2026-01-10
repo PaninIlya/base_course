@@ -16,4 +16,5 @@ class StarSystem:
 system = StarSystem(['p1', 'p2', 'p3'], 'StarSystem1')
 print(len(system))
 system = system + 'planet4'
+system = system + 'planet5'
 print(system.planets)
