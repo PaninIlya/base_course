@@ -10,7 +10,7 @@ class ClassVector:
         return (self.x**2 + self.y**2 + self.z**2)**0.5
     
     def __str__(self):
-        print(f'Вектор с координатами X :{self.x}; Y: {self.y}; Z:{self.z}')
+        return f'Вектор с координатами X :{self.x}; Y: {self.y}; Z:{self.z}'
     
     def __repr__(self):
         return f'ClassVector(x={self.x}, y={self.y}, z={self.z})'
@@ -84,8 +84,16 @@ class ClassVector:
     
     def __ne__(self, other):
           return not self.__eq__(other)
+    
+    def __pow__(self, stepen):
+         return ClassVector(
+            self.x ** stepen,
+            self.y ** stepen,
+            self.z ** stepen
+        )
            
 on = ClassVector(1,4,3)
 o = ClassVector(1,2,3)
 print(on ==o) 
-print(on != o)          
+print(on != o)     
+print(on**2)     
