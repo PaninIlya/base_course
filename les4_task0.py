@@ -43,8 +43,7 @@ class Wallet:
     def __bool__(self):       
         return self.money > 0
     
-    def __repr__(self):
-        
+    def __repr__(self):      
         return f"Wallet: {self.money}"
     
 w1 = Wallet(500000)
