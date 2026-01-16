@@ -75,5 +75,17 @@ class ClassVector:
         self.y *= other.y
         self.z *= other.z
         return self
+    
+    def __eq__(self, other):
+         if self.x == other.x and self.y == other.y and self.z == other.z:
+            return True
+         else:
+              return False
+    
+    def __ne__(self, other):
+          return not self.__eq__(other)
            
-            
+on = ClassVector(1,4,3)
+o = ClassVector(1,2,3)
+print(on ==o) 
+print(on != o)          
