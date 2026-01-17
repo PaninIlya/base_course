@@ -70,7 +70,7 @@ class ClassVector:
         self.z -= other.z
         return self
     
-    def __imul__(self, other):
+    def ___imul__(self, other):
         self.x *= other.x
         self.y *= other.y
         self.z *= other.z
