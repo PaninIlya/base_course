@@ -3,3 +3,4 @@ def sq(chislo):
 
 num = sq(5)
 print(next(num))
+
