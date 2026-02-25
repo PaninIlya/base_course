@@ -11,7 +11,7 @@ planter_color = input(f'Введите цвет планеты(Пр: "orange", "
 sphere = pv.Sphere(radius=sphere_radius, theta_resolution=50, phi_resolution=50, center=(0,sphere_radius+planet_radius+1,0))
 planet = pv.Sphere(radius=planet_radius)
 
-intensity_selection = int(input(f'Введите интенсивность света(не рекомендуется больше 5): '))
+intensity_selection = int(input(f'Введите интенсивность света(не рекомендуется больше 5(кроме случаев с темными цветами поверхностей)): '))
 exponent_selection = int(input(f'Введите экспоненту (насколько свет сконцентрирорван и резок; рекомендуется до 40): '))
 cone_angle_selection = int(input(f'Введите угол падения света (конусообразный; не рекомендуется больше 90): '))
 
