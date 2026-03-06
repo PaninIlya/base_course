@@ -5,7 +5,7 @@ import time
 sphere_radius = int(input(f'Введите радиус спутника: '))
 planet_radius = int(input(f'Введите радиус планеты:  '))
 
-sphere_color = input(f'Введите цвет спутника(Пр: "orange", "darkgrey" ()): ')
+sphere_color = input(f'Введите цвет спутника(Пр: "orange", "darkgrey" ): ')
 planter_color = input(f'Введите цвет планеты(Пр: "orange", "darkgrey"): ')
 
 sphere = pv.Sphere(radius=sphere_radius, theta_resolution=50, phi_resolution=50, center=(0,sphere_radius+planet_radius+1,0))
