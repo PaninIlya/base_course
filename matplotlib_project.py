@@ -11,8 +11,12 @@ n_points = 2000
 phi = np.random.uniform(0, 2 * np.pi, n_points)
 theta = np.random.uniform(0, np.pi, n_points)
 R = 6
+a = 2
+b = 3
+c = 5
 # RGB для желтого цвета света
 light_color = [1.0, 0.9, 0.3]
+
 
 x = R * np.sin(theta) * np.cos(phi)
 y = R * np.sin(theta) * np.sin(phi)
@@ -24,6 +28,9 @@ n_light_points = 200
 phi_light = np.random.uniform(0, 2 * np.pi, n_light_points)
 theta_light = np.random.uniform(0, np.pi, n_light_points)
 
+n_random_rays = 65
+phi_random = np.random.uniform(0, 2 * np.pi, n_random_rays)
+theta_random = np.random.uniform(0, np.pi, n_random_rays)
 
 def spinnig_func(frame):
     ax.clear()
@@ -72,6 +79,7 @@ def spinnig_func(frame):
     # рисуем сферу
     scatter = ax.scatter(x_rotation, y_rotation, z_rotation, c=colors_sphere, s=45, alpha=0.7)
 
+    # Рисуем лучи от источника к сфере
     for i in range(n_light_points):
 
         # векторы, куда будет падать луч(относительно центра сферы)
@@ -111,7 +119,21 @@ def spinnig_func(frame):
 
                 ax.plot(light_x, light_y, light_z, color=light_color, linewidth=0.8, alpha=alpha)
 
-    #это источник света
+
+    for i in range(n_random_rays):
+        direction_x = np.sin(theta_random[i]) * np.cos(phi_random[i])
+        direction_y = np.sin(theta_random[i]) * np.sin(phi_random[i])
+        direction_z = np.cos(theta_random[i])
+
+
+        ray_x = start_x + direction_x * t * R**2
+        ray_y = start_y + direction_y * t * R**2
+        ray_z = start_z + direction_z * t * R**2
+
+
+        ax.plot(ray_x, ray_y, ray_z, color='yellow', linewidth=1, alpha=0.5)
+
+    # это источник света
     ax.scatter([start_x], [start_y], [start_z], c='yellow', s=200, marker='o', edgecolors='orange')
 
     ax.set_xlabel('X координата')
@@ -125,7 +147,10 @@ def spinnig_func(frame):
 
     return ax,
 
-
+# Создаем анимацию
 anim = FuncAnimation(fig, spinnig_func, frames=200, interval=50, blit=False)
+
+# Если хотите сохранить анимацию:
+# anim.save('animation_1.gif', writer='pillow')
 
 plt.show()
