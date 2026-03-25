@@ -162,54 +162,81 @@ def spinnig_func(frame):
 
     ax.scatter(x_rotation_small, y_rotation_small, z_rotation_small, c=colors_sphere_small, s=35, alpha=0.9)
 
-    #Лучи для визуализации
-    for i in range(20):
-        angle1 = np.random.uniform(0, 2 * np.pi)
-        angle2 = np.random.uniform(0, np.pi)
-        direction_x = np.sin(angle2) * np.cos(angle1)
-        direction_y = np.sin(angle2) * np.sin(angle1)
-        direction_z = np.cos(angle2)
+    # Случайные лучи (как в изначальном коде)
+    for i in range(n_random_rays):
+        direction_x = np.sin(theta_random[i]) * np.cos(phi_random[i])
+        direction_y = np.sin(theta_random[i]) * np.sin(phi_random[i])
+        direction_z = np.cos(theta_random[i])
 
-        #Проверяем пересечение с маленькой сферой
-        to_small = np.array([small_x, small_y, small_z]) - np.array([start_x, start_y, start_z])
-        t_proj = direction_x * to_small[0] + direction_y * to_small[1] + direction_z * to_small[2]
+        # Находим пересечение со сферой
+        a_ray = direction_x ** 2 + direction_y ** 2 + direction_z ** 2
+        b_ray = 2 * (start_x * direction_x + start_y * direction_y + start_z * direction_z)
+        c_ray = (start_x ** 2 + start_y ** 2 + start_z ** 2) - R ** 2
 
-        if t_proj > 0:
-            closest_x = start_x + direction_x * t_proj
-            closest_y = start_y + direction_y * t_proj
-            closest_z = start_z + direction_z * t_proj
-            dist2 = (closest_x - small_x) ** 2 + (closest_y - small_y) ** 2 + (closest_z - small_z) ** 2
+        discriminant = b_ray ** 2 - 4 * a_ray * c_ray
 
-            if dist2 < R_small ** 2:
-                half_chord = np.sqrt(R_small ** 2 - dist2)
-                t_hit = t_proj - half_chord
+        if discriminant > 0:
+            t1 = (-b_ray + np.sqrt(discriminant)) / (2 * a_ray)
+            t2 = (-b_ray - np.sqrt(discriminant)) / (2 * a_ray)
 
-                if t_hit > 0:
-                    t_ray = np.linspace(0, t_hit, 40)
-                    ray_x = start_x + direction_x * t_ray
-                    ray_y = start_y + direction_y * t_ray
-                    ray_z = start_z + direction_z * t_ray
-                    ax.plot(ray_x, ray_y, ray_z, color='red', linewidth=1.5, alpha=0.7)
-                    continue
+            ray_crossing = None
+            if t1 > 10 ** (-6):
+                ray_crossing = t1
+            if t2 > 10 ** (-6) and (ray_crossing is None or t2 < ray_crossing):
+                ray_crossing = t2
 
-        #Проверяем пересечение с большой сферой
-        b_big = 2 * (start_x * direction_x + start_y * direction_y + start_z * direction_z)
-        c_big = start_x ** 2 + start_y ** 2 + start_z ** 2 - R ** 2
-        disc = b_big ** 2 - 4 * c_big
+            if ray_crossing is not None:
+                t_ray = np.linspace(0, 1, 50)
+                target_x = start_x + ray_crossing * direction_x
+                target_y = start_y + ray_crossing * direction_y
+                target_z = start_z + ray_crossing * direction_z
 
-        if disc > 0:
-            t_big = (-b_big - np.sqrt(disc)) / 2
-            if t_big > 1e-6:
-                t_ray = np.linspace(0, t_big, 40)
-                ray_x = start_x + direction_x * t_ray
-                ray_y = start_y + direction_y * t_ray
-                ray_z = start_z + direction_z * t_ray
-                ax.plot(ray_x, ray_y, ray_z, color='yellow', linewidth=0.8, alpha=0.4)
+                ray_x = start_x + (target_x - start_x) * t_ray
+                ray_y = start_y + (target_y - start_y) * t_ray
+                ray_z = start_z + (target_z - start_z) * t_ray
 
+                ax.plot(ray_x, ray_y, ray_z, color='yellow', linewidth=1, alpha=0.5)
+
+    # Лучи от источника света
+    for i in range(n_light_points):
+        # векторы, куда будет падать луч (относительно центра сферы)
+        vector_x = np.sin(theta_light[i]) * np.cos(phi_light[i])
+        vector_y = np.sin(theta_light[i]) * np.sin(phi_light[i])
+        vector_z = np.cos(theta_light[i])
+
+        # нахождение точек пересечения (ур-е решается относительно t)
+        a = vector_x ** 2 + vector_y ** 2 + vector_z ** 2
+        b = 2 * (start_x * vector_x + start_y * vector_y + start_z * vector_z)
+        c = (start_x ** 2 + start_y ** 2 + start_z ** 2) - R ** 2
+
+        discriminant = b ** 2 - 4 * a * c
+
+        if discriminant > 0:
+            t1 = (-b + np.sqrt(discriminant)) / (2 * a)
+            t2 = (-b - np.sqrt(discriminant)) / (2 * a)
+
+            light_crossing = None
+            if t1 > 10 ** (-6):
+                light_crossing = t1
+            if t2 > 10 ** (-6) and (light_crossing is None or t2 < light_crossing):
+                light_crossing = t2
+
+            if light_crossing is not None:
+                t_light = np.linspace(0, 1, 50)
+                target_x = start_x + light_crossing * vector_x
+                target_y = start_y + light_crossing * vector_y
+                target_z = start_z + light_crossing * vector_z
+
+                # сами лучи
+                light_x = start_x + (target_x - start_x) * t_light
+                light_y = start_y + (target_y - start_y) * t_light
+                light_z = start_z + (target_z - start_z) * t_light
+
+                alpha = np.random.uniform(0.1, 0.3)
+                ax.plot(light_x, light_y, light_z, color=light_color, linewidth=0.8, alpha=alpha)
+
+    # это источник света
     ax.scatter([start_x], [start_y], [start_z], c='yellow', s=200, marker='o', edgecolors='orange')
-
-    ax.plot([start_x, small_x], [start_y, small_y], [start_z, small_z],
-            color='red', linewidth=2, alpha=0.7, linestyle='--')
 
     ax.set_xlabel('X coord', color='white')
     ax.set_ylabel('Y coord', color='white')
@@ -218,7 +245,7 @@ def spinnig_func(frame):
     ax.tick_params(axis='x', colors='white', labelsize=9)
     ax.tick_params(axis='y', colors='white', labelsize=9)
     ax.tick_params(axis='z', colors='white', labelsize=9)
-    ax.set_title('Photometry - Тень от маленькой планеты', color='black')
+    ax.set_title('Photometry - Тень от маленькой планеты', color='white')
 
     ax.set_xlim([-R - 2, max(start_x, small_x) + 2])
     ax.set_ylim([-R - 2, max(start_y, small_y) + 2])
