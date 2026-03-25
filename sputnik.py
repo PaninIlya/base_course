@@ -24,14 +24,14 @@ x = R * np.sin(theta) * np.cos(phi)
 y = R * np.sin(theta) * np.sin(phi)
 z = R * np.cos(theta)
 
-# Позиция источника света
+#Позиция источника света
 start_x, start_y, start_z = R + 2, R + 2, R + 2
 
-# Направление от центра большой сферы к источнику света
+#Направление от центра большой сферы к источнику света
 direction_to_light = np.array([start_x, start_y, start_z]) - np.array([0, 0, 0])
 direction_to_light = direction_to_light / np.linalg.norm(direction_to_light)
 
-# Позиция маленькой сферы (на линии между источником и большой)
+#Позиция маленькой сферы (на линии между источником и большой)
 distance_from_center = R + R_small + 1.5
 small_x = direction_to_light[0] * distance_from_center
 small_y = direction_to_light[1] * distance_from_center
@@ -77,11 +77,11 @@ def spinnig_func(frame):
         point = np.array([x_rotation[i], y_rotation[i], z_rotation[i]])
         normal_vector = point / np.linalg.norm(point)
 
-        # Вектор от точки к источнику света
+        #Вектор от точки к источнику света
         to_light = np.array([start_x, start_y, start_z]) - point
         to_light = to_light / (np.linalg.norm(to_light) + 1e-10)
 
-        # Косинус угла между нормалью и направлением на свет
+        #Косинус угла между нормалью и направлением на свет
         cos_angle = np.dot(normal_vector, to_light)
 
         # Базовая интенсивность (только освещенная сторона)
@@ -90,55 +90,55 @@ def spinnig_func(frame):
         else:
             intensity = 0
 
-        # ============ ПРОВЕРКА ТЕНИ ============
-        # Вектор от источника к точке
+        #тень
+        #Вектор от источника к точке
         light_to_point = point - np.array([start_x, start_y, start_z])
         distance_to_point = np.linalg.norm(light_to_point)
 
         if distance_to_point > 1e-6:
             light_to_point = light_to_point / distance_to_point
 
-        # Вектор от источника к центру маленькой сферы
+        #Вектор от источника к центру маленькой сферы
         to_small_center = np.array([small_x, small_y, small_z]) - np.array([start_x, start_y, start_z])
 
-        # Находим ближайшую точку на луче к центру маленькой сферы
+        #Находим ближайшую точку на луче к центру маленькой сферы
         t_proj = np.dot(to_small_center, light_to_point)
-
+        #t_proj показывает, насколько далеко от источника находится проекция центра маленькой сферы на луч
         in_shadow = False
 
-        if t_proj > 0:  # Маленькая сфера впереди по направлению луча
-            # Точка на луче, ближайшая к центру маленькой сферы
+        if t_proj > 0:  #Маленькая сфера впереди по направлению луча
+            #Точка на луче, ближайшая к центру маленькой сферы
             closest_point = np.array([start_x, start_y, start_z]) + light_to_point * t_proj
             dist_to_center = np.linalg.norm(closest_point - np.array([small_x, small_y, small_z]))
 
-            # Если расстояние меньше радиуса, луч пересекает сферу
+            #Если расстояние меньше радиуса, луч пересекает сферу
             if dist_to_center < R_small:
-                # Расстояние от источника до точки пересечения
+                #Расстояние от источника до точки пересечения
                 half_chord = np.sqrt(R_small ** 2 - dist_to_center ** 2)
                 t_hit = t_proj - half_chord
 
-                # Если пересечение происходит до точки на большой сфере
+                #Если пересечение происходит до точки на большой сфере
                 if t_hit > 1e-6 and t_hit < distance_to_point:
                     in_shadow = True
 
-        # Применяем цвет
+        # рименяем цвет
         if intensity > 0 and not in_shadow:
-            # Освещенная область
+            #Освещенная область
             point_color = np.array([0.5, 0.5, 0.5]) * (0.3 + intensity * 0.7)
             point_color += np.array(light_color) * intensity * 0.6
             point_color = np.clip(point_color, 0, 1)
         elif in_shadow:
-            # Область тени (темная, но не черная)
+            #Область тени (темная, но не черная)
             point_color = np.array([0.08, 0.08, 0.12])
         else:
-            # Ночная сторона (очень темная)
+            #Ночная сторона (очень темная)
             point_color = np.array([0.03, 0.03, 0.05])
 
         colors_sphere_big.append(point_color)
 
     ax.scatter(x_rotation, y_rotation, z_rotation, c=colors_sphere_big, s=45, alpha=0.8)
 
-    # Маленькая сфера
+    #Маленькая сфера
     colors_sphere_small = []
     for i in range(len(x_small_unit)):
         point = np.array([x_rotation_small[i], y_rotation_small[i], z_rotation_small[i]])
@@ -162,13 +162,13 @@ def spinnig_func(frame):
 
     ax.scatter(x_rotation_small, y_rotation_small, z_rotation_small, c=colors_sphere_small, s=35, alpha=0.9)
 
-    # Случайные лучи (как в изначальном коде)
+    #Случайные лучи (как в изначальном коде)
     for i in range(n_random_rays):
         direction_x = np.sin(theta_random[i]) * np.cos(phi_random[i])
         direction_y = np.sin(theta_random[i]) * np.sin(phi_random[i])
         direction_z = np.cos(theta_random[i])
 
-        # Находим пересечение со сферой
+        #Находим пересечение со сферой
         a_ray = direction_x ** 2 + direction_y ** 2 + direction_z ** 2
         b_ray = 2 * (start_x * direction_x + start_y * direction_y + start_z * direction_z)
         c_ray = (start_x ** 2 + start_y ** 2 + start_z ** 2) - R ** 2
@@ -197,14 +197,14 @@ def spinnig_func(frame):
 
                 ax.plot(ray_x, ray_y, ray_z, color='yellow', linewidth=1, alpha=0.5)
 
-    # Лучи от источника света
+    #Лучи от источника света
     for i in range(n_light_points):
-        # векторы, куда будет падать луч (относительно центра сферы)
+        #векторы, куда будет падать луч (относительно центра сферы)
         vector_x = np.sin(theta_light[i]) * np.cos(phi_light[i])
         vector_y = np.sin(theta_light[i]) * np.sin(phi_light[i])
         vector_z = np.cos(theta_light[i])
 
-        # нахождение точек пересечения (ур-е решается относительно t)
+        #нахождение точек пересечения (ур-е решается относительно t)
         a = vector_x ** 2 + vector_y ** 2 + vector_z ** 2
         b = 2 * (start_x * vector_x + start_y * vector_y + start_z * vector_z)
         c = (start_x ** 2 + start_y ** 2 + start_z ** 2) - R ** 2
@@ -227,7 +227,7 @@ def spinnig_func(frame):
                 target_y = start_y + light_crossing * vector_y
                 target_z = start_z + light_crossing * vector_z
 
-                # сами лучи
+                #сами лучи
                 light_x = start_x + (target_x - start_x) * t_light
                 light_y = start_y + (target_y - start_y) * t_light
                 light_z = start_z + (target_z - start_z) * t_light
@@ -235,7 +235,7 @@ def spinnig_func(frame):
                 alpha = np.random.uniform(0.1, 0.3)
                 ax.plot(light_x, light_y, light_z, color=light_color, linewidth=0.8, alpha=alpha)
 
-    # это источник света
+    #это источник света
     ax.scatter([start_x], [start_y], [start_z], c='yellow', s=200, marker='o', edgecolors='orange')
 
     ax.set_xlabel('X coord', color='white')
