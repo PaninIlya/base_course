@@ -76,7 +76,7 @@ def spinnig_func(frame):
 
         colors_sphere.append(point_color)
 
-    # рисуем сферу
+    #рисуем сферу
     scatter = ax.scatter(x_rotation, y_rotation, z_rotation, c=colors_sphere, s=45, alpha=0.7)
 
 
@@ -134,12 +134,12 @@ def spinnig_func(frame):
 
     for i in range(n_light_points):
 
-        # векторы, куда будет падать луч (относительно центра сферы)
+        #векnоры, куда будет падать луч (относитеьно центра сферы)
         vector_x = np.sin(theta_light[i]) * np.cos(phi_light[i])
         vector_y = np.sin(theta_light[i]) * np.sin(phi_light[i])
         vector_z = np.cos(theta_light[i])
 
-        # нахождение точек пересечения (ур-е решается относительно t)
+        #нахождение точек пересечения (ур-е решается относительно t)
         a = vector_x ** 2 + vector_y ** 2 + vector_z ** 2
         b = 2 * (start_x * vector_x + start_y * vector_y + start_z * vector_z)
         c = (start_x ** 2 + start_y ** 2 + start_z ** 2) - R ** 2
@@ -171,7 +171,7 @@ def spinnig_func(frame):
 
                 ax.plot(light_x, light_y, light_z, color=light_color, linewidth=0.8, alpha=alpha)
 
-    # это источник света
+    #это источник света
     ax.scatter([start_x], [start_y], [start_z], c='yellow', s=200, marker='o', edgecolors='orange')
 
     ax.set_xlabel('X координата')
@@ -186,10 +186,8 @@ def spinnig_func(frame):
     return ax,
 
 
-# Создаем анимацию
+#Создаем анимацию
 anim = FuncAnimation(fig, spinnig_func, frames=200, interval=50, blit=False)
 
-# Если хотите сохранить анимацию:
-# anim.save('animation_1.gif', writer='pillow')
 
 plt.show()
